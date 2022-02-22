@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
         if @user #yes, email matches
             #check the password, send to companies page if match
             if BCrypt::Password.new(@user.password) == entered_password
+                session["user_id"] = @user.id
                 flash[:notice] = "Welcome!"
                 redirect_to "/companies"
             else #password doesn't match, redirect to login
