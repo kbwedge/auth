@@ -1,11 +1,12 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.where({user_id: @current_user.id}) #only shows tasks of current user
     @task = Task.new
   end
 
   def create
     @task = Task.new(params["task"])
+    @task.user_id = @current_user.id
     @task.save
     redirect_to "/tasks"
   end
